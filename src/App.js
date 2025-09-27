@@ -1,10 +1,10 @@
 import "./App.css";
 import Navbar from "./Components/Navbar";
 import Textform from "./Components/Textform";
-// import AboutUs from "./Components/AboutUs";
+import AboutUs from "./Components/AboutUs";
 import Alert from "./Components/Alert";
 import { useState } from "react";
-// import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 function App() {
   const [Mode, setMode] = useState("light"); //whether dark mode is enabled or not
@@ -36,30 +36,30 @@ function App() {
 
   return (
     <>
-      {/* <Router> */}
+      <Router>
         <Navbar title="MyTextUtils" mode={Mode} toggleMode={toggleDarkMode} />
         <Alert alert={alert} />
         <div className="container my-3">
-          {/* <Routes>
-            <Route exact path="/about" element={<AboutUs />} />
+          <Routes>
             <Route
-              exact path="/"
+              path="/MyTextUtils"
               element={
                 <Textform
                   showAlert={showAlert}
-                  heading="Enter The Text Below To Analyze"
+                  heading="Try MyTextUtils - Word Counter, Character Counter, Uppercase & Lowercase Converter"
                   mode={Mode}
                 />
               }
             />
-          </Routes> */}
-          <Textform
+            <Route path="/about" element={<AboutUs mode={Mode} />} />
+          </Routes>
+          {/* <Textform
                   showAlert={showAlert}
                   heading="Enter The Text Below To Analyze"
                   mode={Mode}
-                />
+                /> */}
         </div>
-      {/* </Router> */}
+      </Router>
     </>
   );
 }

@@ -43,6 +43,13 @@ export default function Textform(props) {
     setText(previousText);
     props.showAlert("Undid last action", "success");
   };
+  const handleCopyClick = () => {
+    var text = document.getElementById("myBox");
+    text.select();
+    navigator.clipboard.writeText(text.value);
+    document.getSelection().removeAllRanges();
+    props.showAlert("Copied to clipboard!", "success");
+  }
   const handleRedoClick = () => {
     if (future.length === 0) return;
     const nextText = future[0];
@@ -55,7 +62,7 @@ export default function Textform(props) {
   return (
     <>
       <div className="container">
-        <h1>{props.heading}</h1>
+        <h1 className="mb-4">{props.heading}</h1>
         <div className="mb-3">
           <textarea
             className="form-control"
@@ -69,39 +76,44 @@ export default function Textform(props) {
             }}
           ></textarea>
         </div>
-        <button className="btn btn-primary" onClick={handleUpperClick}>
+        <button disabled={text.length === 0} className="btn btn-primary my-1" onClick={handleUpperClick}>
           Convert to Uppercase
         </button>
-        <button className="btn btn-primary mx-2" onClick={handleLowerClick}>
+        <button disabled={text.length === 0} className="btn btn-primary mx-1 my-1" onClick={handleLowerClick}>
           Convert to Lowercase
         </button>
         <button
-          className="btn btn-primary"
+          className="btn btn-primary my-1"
           onClick={handleUndoClick}
           disabled={history.length === 0}
         >
           Undo
         </button>
         <button
-          className="btn btn-primary mx-2"
+          className="btn btn-primary mx-1 my-1"
           onClick={handleRedoClick}
           disabled={future.length === 0}
         >
           Redo
         </button>
-        <button className="btn btn-danger" onClick={handleClearClick}>
+        <button disabled={text.length === 0} className="btn btn-primary my-1" onClick={handleCopyClick}>
+          Copy Text
+        </button>
+        <button disabled={text.length === 0} className="btn btn-danger mx-1 my-1" onClick={handleClearClick}>
           Clear Text
         </button>
       </div>
       <div className="container my-3">
         <h2>Your Text Summary</h2>
         <p>
-          {text.split(" ").length} words and {text.length} characters &nbsp;
-          &nbsp; + &nbsp; &nbsp; {0.008 * text.split(" ").length} Minutes To
+          {text.split(" ").filter((element) => { return element.length !== 0 }).length} words and {text.length} characters &nbsp;
+          &nbsp; + &nbsp; &nbsp; {0.008 * text.split(" ").filter((element) => { return element.length !== 0 }).length} Minutes To
           Read
         </p>
-        <h2>Text Preview</h2>
-        <p>{text.length > 0 ? text : "Enter The Text Above To Preview"}</p>
+        <div>
+            <h2>Text Preview</h2>
+            <p>{text.length > 0 ? text : "Nothing To Preview    "}</p>
+        </div>
       </div>
     </>
   );
