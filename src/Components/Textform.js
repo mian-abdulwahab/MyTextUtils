@@ -44,10 +44,10 @@ export default function Textform(props) {
     props.showAlert("Undid last action", "success");
   };
   const handleCopyClick = () => {
-    var text = document.getElementById("myBox");
-    text.select();
-    navigator.clipboard.writeText(text.value);
-    document.getSelection().removeAllRanges();
+    // var text = document.getElementById("myBox");
+    // text.select();
+    navigator.clipboard.writeText(text);
+    // document.getSelection().removeAllRanges();
     props.showAlert("Copied to clipboard!", "success");
   }
   const handleRedoClick = () => {
@@ -106,8 +106,8 @@ export default function Textform(props) {
       <div className="container my-3">
         <h2>Your Text Summary</h2>
         <p>
-          {text.split(" ").filter((element) => { return element.length !== 0 }).length} words and {text.length} characters &nbsp;
-          &nbsp; + &nbsp; &nbsp; {0.008 * text.split(" ").filter((element) => { return element.length !== 0 }).length} Minutes To
+          {text.split(/\s+/).filter((element) => { return element.length !== 0 }).length} words and {text.length} characters &nbsp;
+          &nbsp; + &nbsp; &nbsp; {0.008 * text.split(/\s+/).filter((element) => { return element.length !== 0 }).length} Minutes To
           Read
         </p>
         <div>
